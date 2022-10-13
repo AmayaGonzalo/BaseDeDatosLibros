@@ -1,8 +1,4 @@
 var readlineSync = require('readline-sync');
-var pNombre = readlineSync.question("Indique el nombre del libro: ");
-var pAutor = readlineSync.question("Indique el autor del libro: ");
-var pAnio = readlineSync.questionInt("Indique el anio del libro: ");
-var pEdicion = readlineSync.questionInt("Indique la edicion del libro: ");
 var Libro = /** @class */ (function () {
     function Libro(pNombre, pAutor, pAnio, pEdicion) {
         this.nombre = pNombre;
@@ -42,24 +38,65 @@ var GestorLibros = /** @class */ (function () {
     }
     GestorLibros.prototype.insertarLibro = function (pLibro) {
         this.listaLibros.push(pLibro);
-        console.log(pLibro, "insertado");
+        console.log("Libro agregado");
     };
-    GestorLibros.prototype.consultarLibro = function (pNombre) {
+    GestorLibros.prototype.eliminarLibro = function (pLibro) {
         for (var i = 0; i < this.listaLibros.length; i++) {
-            if (pNombre === this.listaLibros[i].getNombre()) {
-                console.log(this.listaLibros[i]);
+            if (pLibro.getNombre() === this.listaLibros[i].getNombre()) {
+                this.listaLibros.splice(i, 1);
+                console.log("El libro: ", pLibro.getNombre(), " ha sido eliminado.");
             }
-            else {
-                console.log("El libro no se encuentra");
+        }
+    };
+    GestorLibros.prototype.consultarLibro = function (pLibroConsulta) {
+        for (var i = 0; i < this.listaLibros.length; i++) {
+            if (pLibroConsulta.getNombre() === this.listaLibros[i].getNombre()) {
+                console.log(this.listaLibros[i].getNombre());
+            }
+        }
+    };
+    GestorLibros.prototype.modificarLibro = function (pNombre) {
+        for (var i = 0; i < this.listaLibros.length; i++) {
+            if (pNombre.getNombre() === this.listaLibros[i].getNombre()) {
+                console.log('Ingrese "1" para cambiar el nombre del libro.');
+                console.log('Ingrese "2" para cambiar el autor del libro.');
+                console.log('Ingrese "3" para cambiar el año del libro.');
+                console.log('Ingrese "4" para cambiar la edición del libro.');
+                var modLibro = readlineSync.questionInt("Que desea modificar: ");
+                if (modLibro === 1) {
+                    var pNombreNuevo = readlineSync.question("Ingrese el nuevo nombre del libro: ");
+                    this.listaLibros[i].setNombre(pNombreNuevo);
+                    console.log("El nombre ha sido modificado por: ", pNombreNuevo);
+                }
+                else if (modLibro === 2) {
+                    var pNombreNuevo = readlineSync.question("Ingrese el nuevo autor del libro: ");
+                    this.listaLibros[i].setAutor(pNombreNuevo);
+                    console.log("El autor ha sido modificado por: ", pNombreNuevo);
+                }
+                else if (modLibro === 3) {
+                    var pNombreNuevo = readlineSync.questionInt("Ingrese el nuevo año del libro: ");
+                    this.listaLibros[i].setAnio(pNombreNuevo);
+                    console.log("El año ha sido modificado por: ", pNombreNuevo);
+                }
+                else if (modLibro === 4) {
+                    var pNombreNuevo = readlineSync.questionInt("Ingrese la nuevo edicion del libro: ");
+                    this.listaLibros[i].setEdicion(pNombreNuevo);
+                    console.log("La edición del libro ha sido modificado por: ", pNombreNuevo);
+                }
             }
         }
     };
     return GestorLibros;
 }());
-var primerLibro = new Libro(pNombre, pAutor, pAnio, pEdicion);
-var segundoLibro = new Libro(pNombre, pAutor, pAnio, pEdicion);
-var listaLibros = [primerLibro, segundoLibro];
-var primerGestor = new GestorLibros(listaLibros);
-primerGestor.insertarLibro(primerLibro);
-console.log(listaLibros);
-console.log(primerGestor);
+var primerLibro = new Libro("Martin Fierro", "José Hernández", 1872, 5);
+var segundoLibro = new Libro("Matematicas discretas", "Ramon Espinosa", 2013, 7);
+var tercerLibro = new Libro("Ingenieria de Software", "Pressman", 2010, 7);
+var PrimerListaLibros = [primerLibro, segundoLibro];
+var primerGestor = new GestorLibros(PrimerListaLibros);
+primerGestor.insertarLibro(tercerLibro); //Se inserta un libro nuevo en la lista de libros
+var pLibroConsulta = readlineSync.question("Indique que libro desea consultar: "); //( pide el titulo de un libro por parametros y lo ejecute)
+primerGestor.consultarLibro(pLibroConsulta);
+//primerGestor.modificarLibro(segundoLibro);
+//let pNombreLibro: Libro = readlineSync.question("Indique que libro desea modificar: ");
+//primerGestor.modificarLibro(pNombreLibro);
+//console.log(segundoLibro)

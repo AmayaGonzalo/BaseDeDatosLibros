@@ -16,7 +16,7 @@ class Libro {
     public getNombre(): string {
         return this.nombre;
     }
-    public setNombre(pNombre:string): void {
+    public setNombre(pNombre: string): void {
         this.nombre = pNombre;
     }
 
@@ -49,56 +49,56 @@ class GestorLibros {
         this.listaLibros = pListaLibros;
     }
 
-
     public insertarLibro(pLibro: Libro): void {
         this.listaLibros.push(pLibro);
         console.log("Libro agregado");
     }
-    
+
     public eliminarLibro(pLibro: Libro): void {
-        for (let i: number = 0; i < this.listaLibros.length; i ++) {
+        for (let i: number = 0; i < this.listaLibros.length; i++) {
             if (pLibro.getNombre() === this.listaLibros[i].getNombre()) {
                 this.listaLibros.splice(i, 1);
                 console.log("El libro: ", pLibro.getNombre(), " ha sido eliminado.");
             }
-        } 
+        }
     }
-    public consultarLibro(pLibroConsulta: Libro): void {       
+
+    public consultarLibro(pLibroConsulta: Libro): void {
         for (let i: number = 0; i < this.listaLibros.length; i++) {
             if (pLibroConsulta.getNombre() === this.listaLibros[i].getNombre()) {
                 console.log(this.listaLibros[i].getNombre());
             }
         }
     }
+
     public modificarLibro(pNombre: Libro): void {
-        for (let i : number = 0; i < this.listaLibros.length; i++) {
+        for (let i: number = 0; i < this.listaLibros.length; i++) {
             if (pNombre.getNombre() === this.listaLibros[i].getNombre()) {
                 console.log('Ingrese "1" para cambiar el nombre del libro.');
                 console.log('Ingrese "2" para cambiar el autor del libro.');
                 console.log('Ingrese "3" para cambiar el año del libro.');
                 console.log('Ingrese "4" para cambiar la edición del libro.');
                 let modLibro = readlineSync.questionInt("Que desea modificar: ");
-                
-                
-                if (modLibro === 1){
+
+                if (modLibro === 1) {
                     let pNombreNuevo = readlineSync.question("Ingrese el nuevo nombre del libro: ");
                     this.listaLibros[i].setNombre(pNombreNuevo);
                     console.log("El nombre ha sido modificado por: ", pNombreNuevo);
-                } else if (modLibro === 2){
+                } else if (modLibro === 2) {
                     let pNombreNuevo = readlineSync.question("Ingrese el nuevo autor del libro: ");
                     this.listaLibros[i].setAutor(pNombreNuevo);
                     console.log("El autor ha sido modificado por: ", pNombreNuevo);
-                } else if (modLibro === 3){
+                } else if (modLibro === 3) {
                     let pNombreNuevo = readlineSync.questionInt("Ingrese el nuevo año del libro: ");
                     this.listaLibros[i].setAnio(pNombreNuevo);
-                    console.log("El año ha sido modificado por: ", pNombreNuevo);                       
-                } else if (modLibro === 4){
+                    console.log("El año ha sido modificado por: ", pNombreNuevo);
+                } else if (modLibro === 4) {
                     let pNombreNuevo = readlineSync.questionInt("Ingrese la nuevo edicion del libro: ");
                     this.listaLibros[i].setEdicion(pNombreNuevo);
-                    console.log("La edición del libro ha sido modificado por: ", pNombreNuevo);  
-                } 
+                    console.log("La edición del libro ha sido modificado por: ", pNombreNuevo);
+                }
             }
-        } 
+        }
     }
 }
 
